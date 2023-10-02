@@ -1,5 +1,9 @@
+#ifndef LISTACIRCULAR_H
+#define LISTACIRCULAR_H
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "Song.h"
-
 
 class ListaCircular {
 private:
@@ -23,3 +27,4 @@ private:
     void RemoveSong(const Song& song);
     void DisplayPlaylist() const;
     };
+    #endif
