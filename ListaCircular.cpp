@@ -3,10 +3,10 @@ using namespace std;
 
 // Implementación del constructor Node
 ListaCircular::Node::Node(const Song& _song) : song(_song), next(nullptr), prev(nullptr) {}
-
-// Implementación de la clase CircularDoublyLinkedList
-
+// Implementación de la clase ListaCircular
+// Constructor de la clase ListaCircular que inicializa el puntero "head" como nullptr.
 ListaCircular::ListaCircular() : head(nullptr) {}
+// Destructor de la clase ListaCircular que libera la memoria de todos los nodos de la lista.
 ListaCircular::~ListaCircular() {
     while (head != nullptr) {
         Node* temp = head->next;
@@ -20,6 +20,9 @@ ListaCircular::~ListaCircular() {
         }
     }
 }
+// Función para agregar una canción a la lista circular doble.
+// Parámetros:
+// - song: Una referencia a un objeto de la clase Song que se va a agregar.
 void ListaCircular::AddSongToList(const Song& song) {
     Node* newNode = new Node(song);
     if (head == nullptr) {
@@ -33,15 +36,17 @@ void ListaCircular::AddSongToList(const Song& song) {
         head->prev = newNode;
     }
 }
+// Función para eliminar una canción de la lista circular doble.
+// Parámetros:
+// - song: Una referencia a un objeto de la clase Song que se va a eliminar.
 void ListaCircular::RemoveSong(const Song& song) {
     if (head == nullptr) {
-        return; // La lista está vacía, no hay nada que eliminar
+        return; // La lista está vacía, no se puede eliminar nada.
     }
-
     Node* current = head;
     do {
         if (current->song.name == song.name && current->song.artist == song.artist) {
-            // Coincide con la canción que deseamos eliminar
+            
             if (current == head) {
                 head = current->next;
             }
@@ -53,21 +58,33 @@ void ListaCircular::RemoveSong(const Song& song) {
         current = current->next;
     } while (current != head);
 }
-
+// Función para mostrar la lista de reproducción en la consola.
 void ListaCircular::DisplayPlaylist() const {
     if (head == nullptr) {
-        cout << "La lista de reproducción está vacía." << std::endl;
+        cout << "La lista de reproducción está vacía." << endl;
         return;
     }
     Node* current = head;
     do {
-        cout << "Nombre: " << current->song.name << std::endl;
-        cout << "Artista: " << current->song.artist << std::endl;
-        cout << "Reproducciones: " << current->song.views << std::endl;
-        cout << "Duración en segundos: " << current->song.duration << std::endl;
-        cout << "---------------------" << std::endl;
+        cout << "Nombre: " << current->song.name << endl;
+        cout << "Artista: " << current->song.artist << endl;
+        cout << "Reproducciones: " << current->song.views << endl;
+        cout << "Duración en segundos: " << current->song.duration << endl;
+        cout << "---------------------" << endl;
 
         current = current->next;
     } while (current != head);
-}
 
+    void ListaCircular::PlayNextSong() {
+    if (head == nullptr) {
+        return; // No hay canciones en la lista
+    }
+    head = head->next; // Cambia la referencia de nodo cabecera a la siguiente canción
+}
+void ListaCircular::PlayPreviousSong() {
+    if (head == nullptr) {
+        return; // No hay canciones en la lista
+    }
+    head = head->prev; // Cambia la referencia de nodo cabecera a la canción anterior
+}
+}
